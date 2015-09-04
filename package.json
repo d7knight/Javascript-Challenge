@@ -1,10 +1,11 @@
 {
-  "name": "sortablechallenge",
+  "name": "javascript-challenge",
   "version": "0.0.0",
   "private": true,
   "main":"app.js",
   "dependencies": {
     "bluebird": "^2.9.34",
     "lodash": "^3.10.1"
-  }
+  },
+  "repository":"https://github.com/d7knight/Javascript-Challenge/"
 }
