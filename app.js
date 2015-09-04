@@ -11,15 +11,18 @@ var OUTPUT_FILENAME='./data/output.txt';
 var dataAccess=require('./data-access');
 var _=require('lodash');
 
-dataAccess.clearFile(OUTPUT_FILENAME);
 var listingPromise=dataAccess.readLineByLine(LISTINGS_FILENAME,function(line){
 
     listings.push(JSON.parse(line));
 });
+function convertManufacturer(manufacturer){
+    manufacturer=manufacturer.split(/\s/)[0];
+    return manufacturer.toLowerCase();
 
+}
 var productsPromise=dataAccess.readLineByLine(PRODUCTS_FILENAME,function(line){
     var product=JSON.parse(line);
-    var manufacturer=product.manufacturer;
+    var manufacturer=convertManufacturer(product.manufacturer);
     if(products[manufacturer]==null){
         products[manufacturer]=[];
     }
@@ -28,19 +31,30 @@ var productsPromise=dataAccess.readLineByLine(PRODUCTS_FILENAME,function(line){
 });
 
 
+
 Promise.join(listingPromise,productsPromise).then(function(){
     _.each(listings,function(listing){
-        var possibleProducts=products[listing.manufacturer];
+        var possibleProducts=products[convertManufacturer(listing.manufacturer)];
         _.each(possibleProducts, function(product){
             var model=product.model;
-            if(listing.title.indexOf(model)!=-1){
+
+            var seperator='(\\s|-|_)*';
+            model=model.replace(/\s/, seperator);
+            model=model.replace('_',seperator);
+            model=model.replace('-', seperator);
+
+            var regex=new RegExp('[\\s-_]'+model+'[\\s-_]','i');
+
+            if(listing.title.match(regex)){
                if(product.listings==null){
                    product.listings=[];
                    results.push({
                        product_name:  product.product_name,
                        listings:  product.listings
                    });
+
                }
+
                 product.listings.push(listing);
                 return false;
             }
@@ -48,9 +62,10 @@ Promise.join(listingPromise,productsPromise).then(function(){
 
     });
 
-    _.each(results,function(result){
-        dataAccess.writeLine(OUTPUT_FILENAME,JSON.stringify(result));
 
-    })
+        dataAccess.writeOutput(OUTPUT_FILENAME,results);
+
+
 
 });
+

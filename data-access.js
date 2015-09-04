@@ -5,7 +5,8 @@ var fs          = require('fs');
 var readline    = require('readline');
 var stream      = require('stream');
 var Promise = require('bluebird');
-var os = require('os')
+var os = require('os');
+var _=require('lodash');
 function readLineByLine(filename, callback){
 
 
@@ -20,20 +21,20 @@ function readLineByLine(filename, callback){
 
 
 }
-function writeLine(filename, line ){
-    fs.appendFile(filename, line+os.EOL, function (err) {
+
+function writeOutput(filename, results ){
+    var data;
+    _.each(results, function(result){
+        data+=JSON.stringify(result)+os.EOL;
+    });
+    fs.writeFile(filename, data, function (err) {
         if (err) throw err;
     });
 }
 
-function clearFile(filename){
-    fs.writeFile(filename, '', function (err) {
-        if (err) throw err;
-    });
-}
+
 
 module.exports = {
     readLineByLine:readLineByLine,
-    writeLine:writeLine,
-    clearFile:clearFile
+    writeOutput:writeOutput
 };
