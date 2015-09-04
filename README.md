@@ -1,4 +1,4 @@
-# Sortable Challenge
+# Javascript Challenge 
 Instructions
 1. In Linux or Windows make sure you have a recent version of Node (0.12.7)
 2. Open a terminal and navigate to the root folder of the cloned repo
