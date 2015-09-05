@@ -12,11 +12,12 @@
 Language
 - NodeJS, lodash library, bluebird library for promises
 
-Implementation
-- I created a Hashmap that maps a manufacturer to a list of products for that 
- manufacturer. 
-- Later for each listing I use the hashmap to retrieve the products from the listing's manufacturer.  
-- I then simply try to find the first product in the list whose model name is in the listing.
+Algorithm  
+
+1. Read in the Json objects from the files provided and create a Hashmap that maps a manufacturer to a list of products for that manufacturer. 
+2. For each listing my algorithm uses the hashmap to retrieve all of the products from the listing's manufacturer.  
+3. My algorithm then finds the first product in the list whose model name is in the listing. If a match is found then the listing is recorded as matching the product and the algorithm continues to match the rest of the listings.  
+4. Writing the output Hashmap entries to output.txt as json objects. 
 
 Edge Cases
 - I checked for case insensitivity in the manufacturer and model when matching.
