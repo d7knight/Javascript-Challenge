@@ -22,4 +22,4 @@ Algorithm
 Edge Cases
 - I checked for case insensitivity in the manufacturer and model when matching.
 - I used a regex applied to model names to match model names that differ slightly extra underscores, hyphens and spaces.
-- I noticed some of the names for manufactures in the listings were multiple words (for example Ricoh Cameras USA). I matched listing like this by considering the manufacturer as Ricoh and then continue attempting to match it to a product. 
+- I noticed some of the names for manufactures in the listings were multiple words (for example Ricoh Cameras USA). I matched listings like this by considering the manufacturer as Ricoh and then continue attempting to match it to a product. 
